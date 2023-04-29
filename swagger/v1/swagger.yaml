@@ -1,0 +1,235 @@
+---
+openapi: 3.0.1
+info:
+  title: BLOG WEB API V1
+  version: v1
+paths:
+  "/roles":
+    get:
+      summary: list roles
+      tags:
+      - Roles
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                      enum:
+                      - user
+                      - admin
+                      - guest
+                  required:
+                  - id
+                  - name
+    post:
+      summary: create role
+      tags:
+      - Roles
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '201':
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    enum:
+                    - Male
+                    - Female
+                required:
+                - name
+        '422':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Not to say
+              required:
+              - name
+  "/roles/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show role
+      tags:
+      - Roles
+      parameters:
+      - name: id
+        in: path
+        description: ID of the role
+        required: true
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    enum:
+                    - Male
+                    - Female
+    patch:
+      summary: update role
+      tags:
+      - Roles
+      parameters:
+      - name: id
+        in: path
+        description: ID of the role
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    enum:
+                    - Male
+                    - Female
+                    - Not to say
+                    - New name
+                required:
+                - id
+                - name
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - errors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New name
+              required:
+              - name
+    delete:
+      summary: delete role
+      tags:
+      - Roles
+      parameters:
+      - name: id
+        in: path
+        description: ID of the role
+        required: true
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    enum:
+                    - Male
+                    - Female
+                    - Not to say
+                    - New name
+                required:
+                - id
+                - name
+servers:
+- url: http://localhost:3000
